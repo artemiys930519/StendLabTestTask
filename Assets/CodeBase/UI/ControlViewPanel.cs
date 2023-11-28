@@ -1,5 +1,9 @@
-﻿using UnityEngine;
+﻿using CodeBase.Enums;
+using CodeBase.Events;
+using CodeBase.Services.SceneRepository;
+using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace CodeBase.UI
 {
@@ -7,13 +11,23 @@ namespace CodeBase.UI
     {
         #region Inspector
 
-        [SerializeField] private ViewPanel _viewPanel;
         [SerializeField] private Button _applicationButton;
 
         #endregion
 
+        private SignalBus _signalBus;
+        private ISceneRepository _sceneRepository;
+
+        [Inject]
+        private void Construct(SignalBus signalBus, ISceneRepository sceneRepository)
+        {
+            _sceneRepository = sceneRepository;
+            _signalBus = signalBus;
+        }
+
         private void OnEnable()
         {
+            HidePanel();
             _applicationButton.onClick.AddListener(OnOpenApplication);
         }
 
@@ -24,7 +38,8 @@ namespace CodeBase.UI
 
         private void OnOpenApplication()
         {
-            _viewPanel.ShowPanel();
+            _signalBus.Fire(new ChangeStateSignal() {ViewType = Enumenators.ViewType.MonitorView});
+            _sceneRepository.GetMainViewPanel().SwitchPanel(Enumenators.PanelType.ApplicationPanel);
         }
     }
 }

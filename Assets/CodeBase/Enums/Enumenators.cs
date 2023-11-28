@@ -9,5 +9,17 @@
             ColorChange = 2,
             CreateObject = 3
         }
+
+        public enum ViewType
+        {
+            FirstPersonView = 0,
+            MonitorView = 1
+        }
+
+        public enum PanelType
+        {
+            MainPanel = 0,
+            ApplicationPanel = 1
+        }
     }
 }

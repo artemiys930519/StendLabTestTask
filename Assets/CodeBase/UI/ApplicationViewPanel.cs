@@ -1,5 +1,6 @@
 ﻿using CodeBase.Enums;
 using CodeBase.Events;
+using CodeBase.Services.SceneRepository;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -21,10 +22,12 @@ namespace CodeBase.UI
         #endregion
 
         private SignalBus _signalBus;
+        private ISceneRepository _sceneRepository;
 
         [Inject]
-        private void Construct(SignalBus signalBus)
+        private void Construct(SignalBus signalBus, ISceneRepository sceneRepository)
         {
+            _sceneRepository = sceneRepository;
             _signalBus = signalBus;
         }
 
@@ -58,7 +61,8 @@ namespace CodeBase.UI
 
         private void OnBackButtonClick()
         {
-            HidePanel();
+            _signalBus.Fire(new ChangeStateSignal() {ViewType = Enumenators.ViewType.FirstPersonView});
+            _sceneRepository.GetMainViewPanel().SwitchPanel(Enumenators.PanelType.MainPanel);
         }
     }
 }

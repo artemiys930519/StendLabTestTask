@@ -15,12 +15,12 @@ namespace CodeBase.Infrastructure.Command
 
         public void Execute()
         {
-            _meshRenderer.material.color = Color.yellow;
+            _meshRenderer.sharedMaterial.color = Color.yellow;
         }
 
         public void Undo()
         {
-            _meshRenderer.material.color = _previousColor;
+            _meshRenderer.sharedMaterial.color = _previousColor;
         }
     }
 }

@@ -7,12 +7,13 @@ using IFactory = CodeBase.Infrastructure.Factory.IFactory;
 
 namespace CodeBase.Managers
 {
-    public class CubeManager : MonoBehaviour
+    public class CommandController : MonoBehaviour
     {
         #region Inspector
 
         [SerializeField] private MeshFilter _spawnRegion;
         [SerializeField] private GameObject _cube;
+        [SerializeField] private GameObject _ObjectPrefab;
 
         #endregion
 
@@ -22,6 +23,7 @@ namespace CodeBase.Managers
         private MeshRenderer _meshRenderer;
 
         private ICommand _previousCommand;
+        private Enumenators.ActionType _previousActionType;
         private IFactory _factory;
 
         [Inject]
@@ -58,8 +60,11 @@ namespace CodeBase.Managers
             if (_previousCommand is IUndoCommand undoCommand)
             {
                 undoCommand?.Undo();
-                _previousCommand = null;
-                return;
+                if (actionSignal.Action == _previousActionType)
+                {
+                    _previousCommand = null;
+                    return;
+                }
             }
 
             switch (actionSignal.Action)
@@ -77,10 +82,11 @@ namespace CodeBase.Managers
                     break;
 
                 case Enumenators.ActionType.CreateObject:
-                    _previousCommand = new ObjectCreateCommand(_cube, _factory, _spawnRegion);
+                    _previousCommand = new ObjectCreateCommand(_ObjectPrefab, _factory, _spawnRegion);
                     break;
             }
 
+            _previousActionType = actionSignal.Action;
             _previousCommand.Execute();
         }
 

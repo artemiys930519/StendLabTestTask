@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace CodeBase.UI
 {
@@ -7,7 +8,12 @@ namespace CodeBase.UI
     public class ViewPanel : MonoBehaviour
     {
         [SerializeField] private CanvasGroup _canvasGroup;
-        
+
+        private void OnEnable()
+        {
+            HidePanel();
+        }
+
         public void ShowPanel()
         {
             _canvasGroup.alpha = 1;
