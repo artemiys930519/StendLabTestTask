@@ -9,6 +9,6 @@ namespace CodeBase.Services.SceneRepository
 
         public IMainViewPanel GetMainViewPanel();
 
-        public FirstPersonController GetPlayer();
+        public FirstPersonController GetPlayerController();
     }
 }

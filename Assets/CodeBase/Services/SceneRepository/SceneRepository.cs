@@ -22,7 +22,7 @@ namespace CodeBase.Services.SceneRepository
             return _mainViewPanel;
         }
 
-        public FirstPersonController GetPlayer()
+        public FirstPersonController GetPlayerController()
         {
             return _firstPersonController;
         }

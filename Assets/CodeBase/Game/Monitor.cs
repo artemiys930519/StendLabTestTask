@@ -32,7 +32,7 @@ namespace CodeBase.Game
         private void Update()
         {
             _collider.enabled = _stateService.GetCurrentState().CurrentView == Enumenators.ViewType.FirstPersonView;
-            if (Vector3.Distance(transform.position, _sceneRepository.GetPlayer().transform.position) > 1.5f ||
+            if (Vector3.Distance(transform.position, _sceneRepository.GetPlayerController().transform.position) > 1.5f ||
                 !_pointerEnter)
                 return;
 
